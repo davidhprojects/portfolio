@@ -467,6 +467,32 @@ a:hover {
     color: var(--color-text);
 }
 
+.timeline-subrole {
+    border-left: 2px solid var(--color-border);
+    padding-left: 14px;
+    margin-top: 12px;
+}
+
+.timeline-subrole:first-of-type {
+    margin-top: 14px;
+}
+
+.timeline-role-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: 2px;
+}
+
+.timeline-subrole .timeline-date {
+    margin-bottom: 6px;
+}
+
+.timeline-subrole p:last-child {
+    color: var(--color-text);
+    font-size: 0.9rem;
+}
+
 /* --- Project Filters --- */
 .project-filters {
     display: flex;
