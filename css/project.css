@@ -123,6 +123,17 @@
     line-height: 1.8;
 }
 
+.project-section ul {
+    padding-left: 20px;
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+.project-section li {
+    margin-bottom: 6px;
+}
+
 /* --- Project Links --- */
 .project-links {
     display: flex;
