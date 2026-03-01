@@ -58,7 +58,7 @@ window.addEventListener('scroll', () => {
 // --- Scroll-triggered fade-in animations ---
 function initScrollAnimations() {
     const animatedElements = document.querySelectorAll(
-        '.timeline-item, .project-card, .skill-category, .about-grid, .about-stats .stat, .contact-item'
+        '.timeline-item, .project-card, .skill-category, .contact-item'
     );
 
     animatedElements.forEach(el => el.classList.add('fade-in'));

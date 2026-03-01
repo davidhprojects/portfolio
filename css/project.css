@@ -1,0 +1,248 @@
+/* ============================================
+   Project Page Styles
+   ============================================ */
+
+/* --- Back Link --- */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--color-accent);
+}
+
+/* --- Project Hero --- */
+.project-hero {
+    padding-top: 120px;
+    padding-bottom: 40px;
+}
+
+.project-hero .project-tag {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: rgba(232, 119, 34, 0.1);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.project-hero h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1.15;
+    margin-bottom: 12px;
+}
+
+.project-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 24px;
+}
+
+.project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.project-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.project-meta i {
+    color: var(--color-accent);
+}
+
+/* --- Hero Image Row --- */
+.project-hero-images {
+    padding: 20px 0 60px;
+}
+
+.hero-image-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.hero-image-row img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+}
+
+/* --- Project Sections --- */
+.project-section {
+    padding: 60px 0;
+}
+
+.project-section.section-alt {
+    background: var(--color-bg-alt);
+}
+
+.project-section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: 24px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.project-section h2::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--color-accent);
+    margin-top: 12px;
+    border-radius: 2px;
+}
+
+.project-section p {
+    color: var(--color-text);
+    margin-bottom: 16px;
+    line-height: 1.8;
+}
+
+/* --- Project Links --- */
+.project-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+}
+
+/* --- Specs Grid --- */
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.spec-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 24px 16px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.spec-item:hover {
+    transform: translateY(-4px);
+}
+
+.spec-value {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 6px;
+}
+
+.spec-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- Photo Gallery --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.gallery-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.gallery-caption {
+    padding: 16px 20px;
+}
+
+.gallery-caption strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--color-white);
+    margin-bottom: 6px;
+}
+
+.gallery-caption p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .hero-image-row {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-image-row img {
+        height: 220px;
+    }
+
+    .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-meta {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .project-links {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+}

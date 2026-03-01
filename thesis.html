@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Go-Kart | David Herrera</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/project.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">DH</a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html#mission">Mission</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <span class="project-tag">Senior Thesis — MAE 440</span>
+            <h1>Autonomous Electric Go-Kart</h1>
+            <p class="project-subtitle">An Electric Go-Kart Using Machine Learning Models For Autonomous Driving</p>
+            <div class="project-meta">
+                <span><i class="fas fa-calendar"></i> Spring 2025</span>
+                <span><i class="fas fa-users"></i> David Herrera, Jackson Crocker, Zev Schuman</span>
+                <span><i class="fas fa-university"></i> Princeton University</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Images -->
+    <section class="project-hero-images">
+        <div class="container">
+            <div class="hero-image-row">
+                <img src="images/thesis/front_main.jpeg" alt="Front left view of the autonomous go-kart">
+                <img src="images/thesis/rear_left.jpeg" alt="Rear left view of the autonomous go-kart">
+                <img src="images/thesis/frame_stripped.jpeg" alt="Stripped frame of the go-kart">
+            </div>
+        </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Abstract</h2>
+            <p>
+                This thesis presents the design and implementation of a fully autonomous, electric go-kart,
+                developed from a refurbished Yerf-Dog frame. The primary objective was to demonstrate
+                vision-based autonomous navigation using low-cost hardware and open-source software. Major
+                subsystems include a 72V electric drivetrain, a custom gear-reduction assembly, a steer-by-wire
+                mechanism actuated via a high-torque motor, and a perception pipeline driven by real-time
+                computer vision.
+            </p>
+            <p>
+                A laptop running Python processes front-facing camera input using YOLOv8 for object detection
+                and SegFormer for semantic segmentation. These outputs are encoded and transmitted to a Teensy 4.1
+                microcontroller, which actuates steering and throttle commands. The final system reliably performed
+                lane following and object recognition (specifically for pedestrians and stop signs), validated through
+                over 20 hours of autonomous testing on campus roads.
+            </p>
+            <p>
+                Peak velocity reached 14 mph with excess torque available. The system operates for approximately
+                5 hours on a single charge and was built under a $2,100 budget, with a total expenditure of $2,040.17.
+                Limitations in model inference speed and decision granularity were encountered, suggesting opportunities
+                for optimization in both perception latency and control smoothing. This work serves as a proof of
+                concept for low-cost, modular autonomous vehicles and highlights the practical integration of
+                mechanical, electrical, and software subsystems under real-world constraints.
+            </p>
+        </div>
+    </section>
+
+    <!-- Software Overview -->
+    <section class="project-section section-alt">
+        <div class="container">
+            <h2>Object and Road Detection Software</h2>
+            <p>
+                The software has two main modes of operation: <strong>Autonomous</strong> and <strong>Manual</strong>.
+                A manual switch installed on the go-kart switch panel toggles between these two modes.
+            </p>
+            <p>
+                The autonomous mode uses a laptop running Python to process camera input. The two machine learning
+                models used are YOLOv8 for object detection and SegFormer for determining road drivability. A script
+                implements these models so that, together, they take an image of the road and place bounding boxes
+                around certain objects (pedestrians, cars, stop signs, etc.). Functions then use the placement and
+                size of these bounding boxes to create steering angle commands for the steering motor.
+            </p>
+            <p>
+                The manual mode is a Python script which takes the steering angle from an encoder on the steering
+                wheel and processes it into an input for the steering motor. A PID controller library and a Servo
+                library are used for the steering motor with a variety of tunable parameters such as max steering
+                angles, max speed, and max acceleration.
+            </p>
+            <div class="project-links">
+                <a href="https://github.com/jaxcrocker/autokart" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fab fa-github"></i> View Code Repository
+                </a>
+                <a href="https://drive.google.com/file/d/1khBuqPcFApM2N6r_hm7tMa_GfwiXzPb3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                    <i class="fas fa-file-alt"></i> View Completed Thesis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specifications -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Key Specifications</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <span class="spec-value">~200 lbs</span>
+                    <span class="spec-label">Estimated Weight</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">20 mph</span>
+                    <span class="spec-label">Top Speed (Modified Sprocket)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">14 mph</span>
+                    <span class="spec-label">Top Speed (Original Sprocket)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">8.4:1</span>
+                    <span class="spec-label">Final Gear Reduction</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">~5 hrs</span>
+                    <span class="spec-label">Estimated Range</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">72V, 20Ah</span>
+                    <span class="spec-label">Drivetrain Battery</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">75 Nm</span>
+                    <span class="spec-label">Steering Torque (50:1 Reduction)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">$2,040</span>
+                    <span class="spec-label">Total Cost</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="project-section section-alt">
+        <div class="container">
+            <h2>Photo Gallery</h2>
+            <p>Below is a gallery of the restoration, design, building, and testing process. Each photo tells a unique story of a different challenge the team overcame.</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/thesis/before_pic.jpeg" alt="Go-kart before restoration">
+                    <div class="gallery-caption">
+                        <strong>Before Restoration</strong>
+                        <p>Go-kart before any work took place. Originally used an internal combustion engine, and every component was in poor condition. The team solely utilized the frame and stripped all other components.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/thesis/frame_stripped.jpeg" alt="Stripped frame">
+                    <div class="gallery-caption">
+                        <strong>Stripped Frame</strong>
+                        <p>The stripped frame down to bare metal. Paint stripping chemical and a variety of sandpaper was used.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/thesis/masked_for_paint.jpeg" alt="Frame masked for paint">
+                    <div class="gallery-caption">
+                        <strong>Masked for Paint</strong>
+                        <p>The frame prepped for paint. Tires and other components were masked off to prevent over-spray.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/thesis/painted_in_bowen.jpeg" alt="Painted frame">
+                    <div class="gallery-caption">
+                        <strong>Fresh Paint</strong>
+                        <p>The frame after paint with new tires.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/thesis/steer_by_wire.jpeg" alt="Steer-by-wire mechanism">
+                    <div class="gallery-caption">
+                        <strong>Steer-by-Wire</strong>
+                        <p>The drive-by-wire steering mechanism. Using a brushed DC motor and a PID controller, the team controls the steering angle from a steering wheel via a pair of encoders. This design went through many iterations and was eventually geared down to a 50:1 ratio outputting a maximum steering torque of 70 Nm.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/thesis/drivetrain.jpeg" alt="Drivetrain assembly">
+                    <div class="gallery-caption">
+                        <strong>Drivetrain Assembly</strong>
+                        <p>The team built an additional shaft to gear down the drive motor. The photo shows a 24:1 reduction, but after initial testing, the team changed the drive sprocket to have an 8.4:1 drive ratio for a top speed of 20 mph while maintaining sufficient torque.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/thesis/wire_harness.jpeg" alt="Wiring harness">
+                    <div class="gallery-caption">
+                        <strong>Wiring Harness</strong>
+                        <p>The final wiring harness in the go-kart. The team used wire conduit and many zip ties to hold everything together, then tucked the excess wires under the seat.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/thesis/switch_panel.jpeg" alt="Switch panel">
+                    <div class="gallery-caption">
+                        <strong>Switch Panel</strong>
+                        <p>Two manual/auto switches toggle between manual and autonomous control. A battery meter regulates the 12V battery, and a potentiometer controls headlight brightness.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Portfolio -->
+    <section class="project-section" style="text-align: center; padding: 60px 0;">
+        <div class="container">
+            <a href="index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" style="padding: 30px 0;">
+        <div class="container">
+            <p class="footer-credit">&copy; 2025 David Herrera</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

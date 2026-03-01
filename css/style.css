@@ -15,8 +15,8 @@
     --color-surface: #1a1a1a;
     --color-text: #e0e0e0;
     --color-text-muted: #888888;
-    --color-accent: #4a9eff;
-    --color-accent-hover: #6db3ff;
+    --color-accent: #e87722;
+    --color-accent-hover: #f58a3b;
     --color-white: #ffffff;
     --color-border: #2a2a2a;
     --font-heading: 'Space Grotesk', sans-serif;
@@ -171,7 +171,7 @@ a:hover {
     background: var(--color-accent-hover);
     color: var(--color-white);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(74, 158, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(232, 119, 34, 0.2);
 }
 
 .btn-outline {
@@ -199,20 +199,30 @@ a:hover {
     color: var(--color-white);
 }
 
-/* --- Hero Section --- */
+/* --- Hero / Mission Section --- */
 #hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 24px;
+    padding: calc(var(--nav-height) + 40px) 0 60px;
     position: relative;
-    background: radial-gradient(ellipse at 50% 0%, rgba(74, 158, 255, 0.08) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 50% 0%, rgba(232, 119, 34, 0.06) 0%, transparent 60%);
 }
 
-.hero-content {
-    max-width: 700px;
+.hero-split {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.hero-image img {
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid var(--color-border);
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+    animation-delay: 0.2s;
 }
 
 .hero-greeting {
@@ -222,54 +232,62 @@ a:hover {
     margin-bottom: 8px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards;
-    animation-delay: 0.2s;
+    animation-delay: 0.3s;
 }
 
 .hero-name {
     font-family: var(--font-heading);
-    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    font-size: clamp(2.4rem, 5vw, 3.5rem);
     font-weight: 700;
     color: var(--color-white);
     line-height: 1.1;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards;
     animation-delay: 0.4s;
 }
 
 .hero-tagline {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: var(--color-text-muted);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.hero-description {
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-bottom: 28px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards;
     animation-delay: 0.6s;
 }
 
-.hero-description {
-    font-size: 1.05rem;
-    color: var(--color-text);
-    line-height: 1.8;
-    margin-bottom: 36px;
+.hero-stats-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
     opacity: 0;
     animation: fadeUp 0.6s ease forwards;
-    animation-delay: 0.8s;
+    animation-delay: 0.7s;
 }
 
 .hero-links {
     display: flex;
-    justify-content: center;
-    gap: 16px;
+    gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 60px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-    animation-delay: 1.0s;
+    margin-left: auto;
 }
 
 .scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -280,7 +298,7 @@ a:hover {
     font-size: 0.8rem;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards, bounce 2s ease-in-out 2s infinite;
-    animation-delay: 1.4s;
+    animation-delay: 1.2s;
 }
 
 .scroll-indicator i {
@@ -289,7 +307,7 @@ a:hover {
 
 /* --- Sections --- */
 .section {
-    padding: 100px 0;
+    padding: 40px 0;
 }
 
 .section-alt {
@@ -316,39 +334,7 @@ a:hover {
     border-radius: 2px;
 }
 
-/* --- About Section --- */
-.about-grid {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 60px;
-    align-items: start;
-}
-
-.about-image img {
-    width: 100%;
-    border-radius: 12px;
-    border: 2px solid var(--color-border);
-}
-
-.about-lead {
-    font-size: 1.15rem;
-    font-weight: 500;
-    color: var(--color-white);
-    margin-bottom: 16px;
-}
-
-.about-text p {
-    margin-bottom: 16px;
-    color: var(--color-text);
-}
-
-.about-stats {
-    display: flex;
-    gap: 40px;
-    margin-top: 32px;
-    padding-top: 32px;
-    border-top: 1px solid var(--color-border);
-}
+/* --- Stats --- */
 
 .stat {
     text-align: center;
@@ -390,6 +376,9 @@ a:hover {
 .timeline-item {
     position: relative;
     margin-bottom: 48px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
 }
 
 .timeline-item:last-child {
@@ -398,7 +387,7 @@ a:hover {
 
 .timeline-marker {
     position: absolute;
-    left: -36px;
+    left: -39px;
     top: 6px;
     width: 14px;
     height: 14px;
@@ -410,6 +399,47 @@ a:hover {
 
 .section-alt .timeline-marker {
     border-color: var(--color-bg-alt);
+}
+
+.timeline-logo {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timeline-logo img {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+}
+
+.timeline-logo img.logo-padded {
+    width: 90%;
+    height: 90%;
+}
+
+.timeline-logo img.logo-kenotom {
+    width: 125%;
+    height: 125%;
+}
+
+.timeline-logo img.logo-emtech {
+    width: 110%;
+    height: 110%;
+}
+
+.timeline-logo img.logo-cap {
+    width: 100%;
+    height: 100%;
+    margin-top: -2px;
+    object-fit: contain;
 }
 
 .timeline-content h3 {
@@ -532,7 +562,7 @@ a:hover {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-accent);
-    background: rgba(74, 158, 255, 0.1);
+    background: rgba(232, 119, 34, 0.1);
     padding: 4px 12px;
     border-radius: 100px;
     margin-bottom: 10px;
@@ -596,21 +626,21 @@ a:hover {
     font-size: 0.85rem;
     padding: 6px 14px;
     border-radius: 100px;
-    background: rgba(74, 158, 255, 0.08);
-    border: 1px solid rgba(74, 158, 255, 0.15);
+    background: rgba(232, 119, 34, 0.08);
+    border: 1px solid rgba(232, 119, 34, 0.15);
     color: var(--color-text);
     transition: all 0.3s ease;
 }
 
 .skill-tag:hover {
-    background: rgba(74, 158, 255, 0.15);
+    background: rgba(232, 119, 34, 0.15);
     border-color: var(--color-accent);
     color: var(--color-white);
 }
 
 /* --- Footer / Contact --- */
 #contact {
-    padding: 80px 0;
+    padding: 40px 0;
     text-align: center;
     background: var(--color-bg-alt);
     border-top: 1px solid var(--color-border);
@@ -711,19 +741,26 @@ a:hover {
         display: flex;
     }
 
-    .about-grid {
+    .hero-split {
         grid-template-columns: 1fr;
         gap: 32px;
         text-align: center;
     }
 
-    .about-image {
+    .hero-image {
         max-width: 200px;
         margin: 0 auto;
     }
 
-    .about-stats {
+    .hero-stats-row {
         justify-content: center;
+    }
+
+    .hero-links {
+        margin-left: 0;
+        justify-content: center;
+        width: 100%;
+        margin-top: 16px;
     }
 
     .skills-grid {
@@ -734,13 +771,8 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
-    .hero-links {
-        flex-direction: column;
-        align-items: center;
-    }
-
     .section {
-        padding: 70px 0;
+        padding: 28px 0;
     }
 
     .contact-links {
