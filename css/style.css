@@ -314,6 +314,13 @@ a:hover {
     background: var(--color-bg-alt);
 }
 
+#education {
+    background: linear-gradient(rgba(10, 10, 10, 0.82), rgba(10, 10, 10, 0.82)), url('../images/education.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
 .section-title {
     font-family: var(--font-heading);
     font-size: 2.2rem;
