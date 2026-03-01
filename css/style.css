@@ -675,7 +675,10 @@ a:hover {
 #contact {
     padding: 40px 0;
     text-align: center;
-    background: var(--color-bg-alt);
+    background: linear-gradient(rgba(10, 10, 10, 0.82), rgba(10, 10, 10, 0.82)), url('../images/getintouch.JPG');
+    background-size: cover;
+    background-position: center 30%;
+    background-attachment: fixed;
     border-top: 1px solid var(--color-border);
 }
 
