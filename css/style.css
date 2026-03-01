@@ -751,6 +751,11 @@ a:hover {
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
+    #education,
+    #contact {
+        background-attachment: scroll;
+    }
+
     .nav-links {
         position: fixed;
         top: var(--nav-height);

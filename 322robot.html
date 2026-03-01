@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search & Rescue Robot | David Herrera</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/project.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">DH</a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html#mission">Mission</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <span class="project-tag">MAE 322 — Engineering Design</span>
+            <h1>Autonomous Search &amp; Rescue Robot</h1>
+            <p class="project-subtitle">A 10-Person Collaborative Project to Design and Build an Autonomous Obstacle-Navigating Robot</p>
+            <div class="project-meta">
+                <span><i class="fas fa-calendar"></i> Spring 2025</span>
+                <span><i class="fas fa-users"></i> 10-Person Team</span>
+                <span><i class="fas fa-university"></i> Princeton University</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Images -->
+    <section class="project-hero-images">
+        <div class="container">
+            <div class="hero-image-row">
+                <img src="images/projects/322robot.png" alt="Completed search and rescue robot">
+                <img src="images/322pics/sideview.png" alt="Side view of robot approaching obstacle course">
+                <img src="images/322pics/topview.png" alt="Top view of robot in CAD">
+            </div>
+        </div>
+    </section>
+
+    <!-- Abstract -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Abstract</h2>
+            <p>
+                The objective of this project was to design a Search and Rescue Robot that can
+                autonomously traverse an obstacle course, navigate toward a light source, and deliver a
+                medical kit. The course includes an 8-foot ramp, a dogleg chute comprised of three 6-8 foot
+                segments with 18" plywood walls, and a 1-foot high wall with a 6" step. A secondary
+                goal was to complete the course as fast as possible. The robot also had to survive a 1-foot drop test.
+            </p>
+            <p>
+                The robot was designed as a three-wheeled vehicle with an aluminum chassis. The wheels feature 3D printed
+                rubber hooks for better traction, and the robot is powered by a 12V battery using a
+                DC CIM motor for propulsion. An Arduino Teensy microcontroller controls the motors and sensors
+                and runs the autonomous navigation script.
+            </p>
+            <p>
+                This project was completed in a group of 10 students and proved to be an incredible teambuilding
+                exercise. I was primarily responsible for the manufacturing of the robot, as well as the testing
+                and validation of the autonomous code. Because it involved many machine shop hours, communication
+                was essential in completing the project efficiently. Ultimately, the team chose to go with a
+                "Perry The Platypus" theme and 3D printed a cover for the robot!
+            </p>
+        </div>
+    </section>
+
+    <!-- Design Overview -->
+    <section class="project-section section-alt">
+        <div class="container">
+            <h2>Design Overview</h2>
+            <p>
+                The robot uses a carefully designed aluminum frame mounted on a laser-cut acrylic base plate.
+                A single DC CIM motor drives the rear wheels through a chain-and-sprocket system, while a
+                servo-controlled front wheel handles steering. The medical kit delivery system uses a flexible
+                rubber wheel that grabs the cube-shaped med kit and spins on command to deliver it.
+            </p>
+            <p>
+                The autonomous navigation relies on infrared sensors for wall detection in the dogleg chute,
+                a photoresistor array for light-source tracking, and bump sensors for obstacle detection.
+                All sensor data is processed by the Teensy microcontroller running a state-machine-based
+                control algorithm.
+            </p>
+            <div class="project-links">
+                <a href="https://drive.google.com/file/d/1v1s4lrfGSBTyijSdLXGH9ULClXew4eah/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fas fa-file-alt"></i> View Final Design Report
+                </a>
+                <a href="https://drive.google.com/drive/folders/1Yv76NXefJp7qG6xDEY0dlYaSKw5q4PSw?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                    <i class="fas fa-video"></i> View Test Run Videos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Photo Gallery</h2>
+            <p>A look at the design, manufacturing, and testing process.</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/322pics/topview.png" alt="Top view of robot in CAD">
+                    <div class="gallery-caption">
+                        <strong>CAD Top View</strong>
+                        <p>Top view of the robot in CAD, showing the layout of all major components.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/322pics/designoverview.png" alt="Design overview">
+                    <div class="gallery-caption">
+                        <strong>Design Overview</strong>
+                        <p>Overview of the robot's mechanical design and component placement.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/322pics/frameacrylic.png" alt="Aluminum frame on acrylic base">
+                    <div class="gallery-caption">
+                        <strong>Frame Assembly</strong>
+                        <p>The aluminum frame being attached to the laser-cut acrylic sheet below it.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/322pics/medkitdelivery.png" alt="Medical kit delivery system">
+                    <div class="gallery-caption">
+                        <strong>Med Kit Delivery System</strong>
+                        <p>A flexible rubber wheel grabs the cube-shaped med kit and spins on command to throw it into the box.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/322pics/firstroll.png" alt="Robot's first roll">
+                    <div class="gallery-caption">
+                        <strong>First Roll</strong>
+                        <p>The moment the robot first rolled under its own power.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/322pics/sideview.png" alt="Side view approaching course">
+                    <div class="gallery-caption">
+                        <strong>Approaching the Course</strong>
+                        <p>Side view of the robot as it approached the obstacle course.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/322pics/walltraversal.png" alt="Wall traversal">
+                    <div class="gallery-caption">
+                        <strong>Wall Traversal</strong>
+                        <p>The robot demonstrating its ability to climb over the 1-foot wall obstacle.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/322pics/grouppicture.png" alt="Team group photo">
+                    <div class="gallery-caption">
+                        <strong>The Team</strong>
+                        <p>The full 10-person team behind the Search &amp; Rescue Robot.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Portfolio -->
+    <section class="project-section" style="text-align: center; padding: 60px 0;">
+        <div class="container">
+            <a href="index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" style="padding: 30px 0;">
+        <div class="container">
+            <p class="footer-credit">&copy; 2025 David Herrera</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
