@@ -59,6 +59,94 @@
         </div>
     </section>
 
+    <!-- Mission & Specs -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Mission</h2>
+            <ul>
+                <li>Design and build a fully autonomous electric go-kart from a refurbished Yerf-Dog frame</li>
+                <li>Demonstrate vision-based autonomous navigation using low-cost hardware and open-source software</li>
+                <li>Integrate mechanical, electrical, and software subsystems into a functional proof of concept — all under a $2,100 budget</li>
+            </ul>
+
+            <h2>Key Specifications</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <span class="spec-value">~200 lbs</span>
+                    <span class="spec-label">Estimated Weight</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">25 mph</span>
+                    <span class="spec-label">Top Speed</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">3 kW</span>
+                    <span class="spec-label">Drive Motor</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">~5 hrs</span>
+                    <span class="spec-label">Estimated Range</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">72V, 20Ah</span>
+                    <span class="spec-label">Drivetrain Battery</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-value">$2,040</span>
+                    <span class="spec-label">Total Cost</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Overview -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Software & Autonomy</h2>
+            <ul>
+                <li>Two modes of operation — <strong>Autonomous</strong> and <strong>Manual</strong> — toggled via a switch on the panel</li>
+                <li><strong>Autonomous:</strong> Laptop running Python processes camera input using YOLOv8 (object detection) and SegFormer (road drivability) to generate steering commands</li>
+                <li><strong>Manual:</strong> Encoder on the steering wheel feeds angle data to the steering motor with tunable parameters for max angle, speed, and acceleration</li>
+            </ul>
+
+            <h2>Drivetrain</h2>
+            <ul>
+                <li><strong>Motor:</strong> 3 kW brushless DC motor powered by a 72V, 20Ah battery pack</li>
+                <li><strong>Transmission:</strong> Custom gear-reduction assembly with chain-and-sprocket; top speed of 25 mph</li>
+            </ul>
+
+            <h2>Steer-by-Wire</h2>
+            <ul>
+                <li><strong>Final design:</strong> 12 Nm stepper motor geared 2:1, providing precise and reliable steering control</li>
+                <li>Earlier iteration used a brushed DC motor with a PID controller — burned out frequently and stripped gears constantly</li>
+                <li>Steering angle controlled via an encoder on the steering wheel, transmitted to a Teensy 4.1 microcontroller</li>
+            </ul>
+
+            <h2>Electrical</h2>
+            <ul>
+                <li>Custom wiring harness with car horn, headlights on a potentiometer, and a 72V safe power switch</li>
+                <li>Switch panel with manual/auto toggles, battery meter for the 12V system, and headlight brightness control</li>
+            </ul>
+
+            <h2>Results</h2>
+            <ul>
+                <li>Passed over 90% of autonomous driving tests in a parking lot</li>
+                <li>Validated through 20+ hours of autonomous testing on campus roads — lane following, pedestrian detection, and stop sign recognition</li>
+                <li>Built under budget at $2,040.17 out of $2,100 allocated</li>
+                <li>Serves as a proof of concept for low-cost, modular autonomous vehicles</li>
+            </ul>
+
+            <div class="project-links">
+                <a href="https://github.com/jaxcrocker/autokart" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fab fa-github"></i> View Code Repository
+                </a>
+                <a href="https://drive.google.com/file/d/1khBuqPcFApM2N6r_hm7tMa_GfwiXzPb3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                    <i class="fas fa-file-alt"></i> View Completed Thesis
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Abstract -->
     <section class="project-section">
         <div class="container">
@@ -86,79 +174,6 @@
                 concept for low-cost, modular autonomous vehicles and highlights the practical integration of
                 mechanical, electrical, and software subsystems under real-world constraints.
             </p>
-        </div>
-    </section>
-
-    <!-- Software Overview -->
-    <section class="project-section section-alt">
-        <div class="container">
-            <h2>Object and Road Detection Software</h2>
-            <p>
-                The software has two main modes of operation: <strong>Autonomous</strong> and <strong>Manual</strong>.
-                A manual switch installed on the go-kart switch panel toggles between these two modes.
-            </p>
-            <p>
-                The autonomous mode uses a laptop running Python to process camera input. The two machine learning
-                models used are YOLOv8 for object detection and SegFormer for determining road drivability. A script
-                implements these models so that, together, they take an image of the road and place bounding boxes
-                around certain objects (pedestrians, cars, stop signs, etc.). Functions then use the placement and
-                size of these bounding boxes to create steering angle commands for the steering motor.
-            </p>
-            <p>
-                The manual mode is a Python script which takes the steering angle from an encoder on the steering
-                wheel and processes it into an input for the steering motor. A PID controller library and a Servo
-                library are used for the steering motor with a variety of tunable parameters such as max steering
-                angles, max speed, and max acceleration.
-            </p>
-            <div class="project-links">
-                <a href="https://github.com/jaxcrocker/autokart" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                    <i class="fab fa-github"></i> View Code Repository
-                </a>
-                <a href="https://drive.google.com/file/d/1khBuqPcFApM2N6r_hm7tMa_GfwiXzPb3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-                    <i class="fas fa-file-alt"></i> View Completed Thesis
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Specifications -->
-    <section class="project-section">
-        <div class="container">
-            <h2>Key Specifications</h2>
-            <div class="specs-grid">
-                <div class="spec-item">
-                    <span class="spec-value">~200 lbs</span>
-                    <span class="spec-label">Estimated Weight</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-value">20 mph</span>
-                    <span class="spec-label">Top Speed (Modified Sprocket)</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-value">14 mph</span>
-                    <span class="spec-label">Top Speed (Original Sprocket)</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-value">8.4:1</span>
-                    <span class="spec-label">Final Gear Reduction</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-value">~5 hrs</span>
-                    <span class="spec-label">Estimated Range</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-value">72V, 20Ah</span>
-                    <span class="spec-label">Drivetrain Battery</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-value">75 Nm</span>
-                    <span class="spec-label">Steering Torque (50:1 Reduction)</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-value">$2,040</span>
-                    <span class="spec-label">Total Cost</span>
-                </div>
-            </div>
         </div>
     </section>
 
