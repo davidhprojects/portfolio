@@ -204,7 +204,7 @@ a:hover {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: calc(var(--nav-height) + 40px) 0 60px;
+    padding: calc(var(--nav-height) + 10px) 0 20px;
     position: relative;
     background: radial-gradient(ellipse at 50% 0%, rgba(232, 119, 34, 0.06) 0%, transparent 60%);
 }
