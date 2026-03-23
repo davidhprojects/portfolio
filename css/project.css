@@ -205,6 +205,16 @@
     width: 100%;
     height: auto;
     object-fit: contain;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.03);
+}
+
+.gallery-item video {
+    border-radius: 10px 10px 0 0;
 }
 
 .gallery-item > p {
