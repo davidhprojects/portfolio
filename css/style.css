@@ -807,6 +807,14 @@ a:hover {
         margin-top: 16px;
     }
 
+    #hero {
+        padding-bottom: 80px;
+    }
+
+    .scroll-indicator {
+        bottom: 20px;
+    }
+
     .skills-grid {
         grid-template-columns: 1fr;
     }
