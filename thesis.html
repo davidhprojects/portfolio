@@ -51,25 +51,69 @@
     <!-- Hero Images -->
     <section class="project-hero-images">
         <div class="container">
-            <div class="hero-image-row">
-                <img src="images/thesis/front_main.jpeg" alt="Front left view of the autonomous go-kart">
-                <img src="images/thesis/rear_left.jpeg" alt="Rear left view of the autonomous go-kart">
-                <img src="images/thesis/frame_stripped.jpeg" alt="Stripped frame of the go-kart">
+            <div class="hero-image-row" style="align-items: stretch;">
+                <img src="images/thesis/front_main.jpeg" alt="Front left view of the autonomous go-kart" style="height: auto; object-fit: contain;">
+                <img src="images/thesis/rear_left.jpeg" alt="Rear left view of the autonomous go-kart" style="height: auto; object-fit: contain;">
+                <img src="images/thesis/frame_stripped.jpeg" alt="Stripped frame of the go-kart" style="height: auto; object-fit: contain;">
             </div>
         </div>
     </section>
 
-    <!-- Mission & Specs -->
+    <!-- Project Details -->
     <section class="project-section">
         <div class="container">
-            <h2>Mission</h2>
-            <ul>
-                <li>Design and build a fully autonomous electric go-kart from a refurbished Yerf-Dog frame</li>
-                <li>Demonstrate vision-based autonomous navigation using low-cost hardware and open-source software</li>
-                <li>Integrate mechanical, electrical, and software subsystems into a functional proof of concept — all under a $2,100 budget</li>
-            </ul>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h2>Mission</h2>
+                    <ul>
+                        <li>Design and build a fully autonomous electric go-kart from a refurbished Yerf-Dog frame</li>
+                        <li>Demonstrate vision-based autonomous navigation using low-cost hardware and open-source software</li>
+                        <li>Integrate mechanical, electrical, and software subsystems into a functional proof of concept — all under a $2,100 budget</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>Software &amp; Autonomy</h2>
+                    <ul>
+                        <li>Two modes of operation — <strong>Autonomous</strong> and <strong>Manual</strong> — toggled via a switch on the panel</li>
+                        <li><strong>Autonomous:</strong> Laptop running Python processes camera input using YOLOv8 (object detection) and SegFormer (road drivability) to generate steering commands</li>
+                        <li><strong>Manual:</strong> Encoder on the steering wheel feeds angle data to the steering motor with tunable parameters for max angle, speed, and acceleration</li>
+                    </ul>
+                </div>
+            </div>
 
-            <h2>Key Specifications</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
+                <div>
+                    <h2>Drivetrain</h2>
+                    <ul>
+                        <li><strong>Motor:</strong> 3 kW brushless DC motor powered by a 72V, 20Ah battery pack</li>
+                        <li><strong>Transmission:</strong> Custom gear-reduction assembly with chain-and-sprocket; top speed of 25 mph</li>
+                    </ul>
+
+                    <h2 style="margin-top: 30px;">Steer-by-Wire</h2>
+                    <ul>
+                        <li><strong>Final design:</strong> 12 Nm stepper motor geared 2:1, providing precise and reliable steering control</li>
+                        <li>Earlier iteration used a brushed DC motor with a PID controller — burned out frequently and stripped gears constantly</li>
+                        <li>Steering angle controlled via an encoder on the steering wheel, transmitted to a Teensy 4.1 microcontroller</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>Electrical</h2>
+                    <ul>
+                        <li>Custom wiring harness with car horn, headlights on a potentiometer, and a 72V safe power switch</li>
+                        <li>Switch panel with manual/auto toggles, battery meter for the 12V system, and headlight brightness control</li>
+                    </ul>
+
+                    <h2 style="margin-top: 30px;">Results</h2>
+                    <ul>
+                        <li>Passed over 90% of autonomous driving tests in a parking lot</li>
+                        <li>Validated through 20+ hours of autonomous testing on campus roads — lane following, pedestrian detection, and stop sign recognition</li>
+                        <li>Built under budget at $2,040.17 out of $2,100 allocated</li>
+                        <li>Serves as a proof of concept for low-cost, modular autonomous vehicles</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 40px;">Key Specifications</h2>
             <div class="specs-grid">
                 <div class="spec-item">
                     <span class="spec-value">~200 lbs</span>
@@ -96,47 +140,8 @@
                     <span class="spec-label">Total Cost</span>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Design Overview -->
-    <section class="project-section">
-        <div class="container">
-            <h2>Software & Autonomy</h2>
-            <ul>
-                <li>Two modes of operation — <strong>Autonomous</strong> and <strong>Manual</strong> — toggled via a switch on the panel</li>
-                <li><strong>Autonomous:</strong> Laptop running Python processes camera input using YOLOv8 (object detection) and SegFormer (road drivability) to generate steering commands</li>
-                <li><strong>Manual:</strong> Encoder on the steering wheel feeds angle data to the steering motor with tunable parameters for max angle, speed, and acceleration</li>
-            </ul>
-
-            <h2>Drivetrain</h2>
-            <ul>
-                <li><strong>Motor:</strong> 3 kW brushless DC motor powered by a 72V, 20Ah battery pack</li>
-                <li><strong>Transmission:</strong> Custom gear-reduction assembly with chain-and-sprocket; top speed of 25 mph</li>
-            </ul>
-
-            <h2>Steer-by-Wire</h2>
-            <ul>
-                <li><strong>Final design:</strong> 12 Nm stepper motor geared 2:1, providing precise and reliable steering control</li>
-                <li>Earlier iteration used a brushed DC motor with a PID controller — burned out frequently and stripped gears constantly</li>
-                <li>Steering angle controlled via an encoder on the steering wheel, transmitted to a Teensy 4.1 microcontroller</li>
-            </ul>
-
-            <h2>Electrical</h2>
-            <ul>
-                <li>Custom wiring harness with car horn, headlights on a potentiometer, and a 72V safe power switch</li>
-                <li>Switch panel with manual/auto toggles, battery meter for the 12V system, and headlight brightness control</li>
-            </ul>
-
-            <h2>Results</h2>
-            <ul>
-                <li>Passed over 90% of autonomous driving tests in a parking lot</li>
-                <li>Validated through 20+ hours of autonomous testing on campus roads — lane following, pedestrian detection, and stop sign recognition</li>
-                <li>Built under budget at $2,040.17 out of $2,100 allocated</li>
-                <li>Serves as a proof of concept for low-cost, modular autonomous vehicles</li>
-            </ul>
-
-            <div class="project-links">
+            <div class="project-links" style="margin-top: 40px;">
                 <a href="https://github.com/jaxcrocker/autokart" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                     <i class="fab fa-github"></i> View Code Repository
                 </a>
@@ -251,6 +256,21 @@
         </div>
     </section>
 
+    <!-- P-rade Video -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Princeton P-rade</h2>
+            <p>Displaying the go-kart at the Princeton P-rade — tap to unmute</p>
+            <div class="hero-image-row" style="grid-template-columns: 1fr;">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="images/thesis/IMG_1441.MOV" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Back to Portfolio -->
     <section class="project-section" style="text-align: center; padding: 60px 0;">
         <div class="container">
@@ -266,5 +286,14 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        document.querySelectorAll('.video-container').forEach(container => {
+            container.addEventListener('click', () => {
+                const video = container.querySelector('video');
+                video.muted = !video.muted;
+                container.classList.toggle('unmuted', !video.muted);
+            });
+        });
+    </script>
 </body>
 </html>
