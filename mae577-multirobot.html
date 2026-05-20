@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Robot Systems Project | David Herrera</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/project.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">DH</a>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html#mission">Mission</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <span class="project-tag">MAE 577 — Multi-Robot Systems</span>
+            <h1>Bimanual Tray Lifting Through Shared Vision</h1>
+            <p class="project-subtitle">Two Independent Robot Arms Coordinate to Lift, Move, and Lower a Tray with a Water-Filled Glass &mdash; Sharing Only a Camera, Exchanging Zero Messages</p>
+            <div class="project-meta">
+                <span><i class="fas fa-calendar"></i> Spring 2026</span>
+                <span><i class="fas fa-users"></i> David Herrera, Jackson Crocker</span>
+                <span><i class="fas fa-university"></i> Princeton University MAE 577</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Images -->
+    <section class="project-hero-images">
+        <div class="container">
+            <div class="hero-image-row" style="align-items: start;">
+                <img src="images/mae577-multirobot/main_image.png" alt="Bimanual tray-lifting problem setup with two SO-101 arms" style="height: auto; object-fit: contain;">
+                <div>
+                    <img src="images/mae577-multirobot/gripper.png" alt="Modified linear-rack gripper">
+                    <p style="text-align: center; margin: 10px 0 0; font-size: 0.9rem; color: var(--color-text-muted); font-weight: 500;">Custom End Effector</p>
+                </div>
+                <div>
+                    <img src="images/mae577-multirobot/tray.png" alt="Custom-designed tray with AprilTag markers">
+                    <p style="text-align: center; margin: 10px 0 0; font-size: 0.9rem; color: var(--color-text-muted); font-weight: 500;">Custom Tray</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission + Contributions -->
+    <section class="project-section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px 40px;">
+                <div>
+                    <h2>Abstract</h2>
+                    <p>
+                        We present a decentralized algorithmic approach to bimanual tray-lifting with two independent LeRobot SO-101 robot arm manipulators. The two arms share only a single RGB camera stream and exchange no direct messages of any kind. Each arm runs in its own thread and issues motor commands from a scene representation it builds for itself from AprilTag markers on the tray, grippers, and arm bases.
+                    </p>
+                    <p>
+                        Coordination emerges implicitly from both arms observing the same scene and mapping observations to joint commands through the same pipeline &mdash; a pre-fit polynomial motion map from base-frame planar coordinates to joint angles, a shared phased procedure, and closed-loop visual servoing. The full pick&ndash;move&ndash;place sequence executes reliably on physical hardware with a water-filled glass on the tray.
+                    </p>
+                </div>
+                <div>
+                    <h2>Mission</h2>
+                    <ul>
+                        <li>Coordinate two independent 5-DoF robot arms to lift, translate, and lower a tray with a water-filled glass &mdash; without spilling, tilting, or dropping</li>
+                        <li>Restrict the arms to share only an RGB camera and exchange no direct messages &mdash; coordination must <em>emerge</em> from shared vision alone</li>
+                        <li>Build that coordination from small, interpretable algorithms rather than a learned policy</li>
+                    </ul>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <h2>Algorithmic Contributions</h2>
+                    <ul>
+                        <li><strong>Polynomial motion map:</strong> a degree-3 <em>(x,&nbsp;z)</em>&nbsp;&rarr;&nbsp;5-joint regression that replaces a traditional IK solver</li>
+                        <li><strong>Nudge-lift handshake:</strong> a small physical pre-move on the tray that the other arm detects visually &mdash; replaces explicit &ldquo;ready-to-lift&rdquo; messaging</li>
+                        <li><strong>Tilt-aware synchronized lift:</strong> each arm only steps up when its own side is at-or-below the other &mdash; the tray stays level by construction</li>
+                        <li><strong>Leader&ndash;follower translation:</strong> the follower tracks the leader&rsquo;s gripper marker through a once-measured offset &mdash; no plan exchange required</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware & Modifications -->
+    <section class="project-section section-alt">
+        <div class="container">
+            <h2>Hardware &amp; Modifications</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-top: 16px;">
+                <div>
+                    <p>
+                        The base platform is the open-source LeRobot SO-101 &mdash; an inexpensive 5-DoF follower arm with position-controlled Feetech STS3215 servos exposed through HuggingFace LeRobot&rsquo;s <code>SOFollower</code> bus interface. The stock design wasn&rsquo;t immediately suited for bimanual tray work, so we modified the end-effector, the base, and the bicep, and designed a custom tray and AprilTag layout from scratch. All custom parts were CAD&rsquo;d in Fusion 360 and 3D-printed on a Bambu X1E.
+                    </p>
+                </div>
+                <div>
+                    <div class="hero-image-row" style="grid-template-columns: 1fr;">
+                        <img src="images/mae577-multirobot/original_lerobot.png" alt="Unmodified LeRobot SO-101 arm" style="height: 320px; object-fit: contain;">
+                    </div>
+                    <h3 style="margin-top: 16px;">Starting Point: Stock SO-101</h3>
+                    <p>
+                        The original &ldquo;Finger-Tips&rdquo; end-effector swings to open and close, which is space-inefficient for a simple binary grasp, and prints in brittle PLA. Range of motion in the vertical direction is also limited &mdash; at extended distances the gripper would rotate to gain height, which would have ruined the tray-lift task.
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 32px;">Modified End-Effector</h3>
+            <div class="hero-image-row" style="grid-template-columns: 1fr;">
+                <img src="images/mae577-multirobot/exploded_end_effector.png" alt="Exploded view of the modified end-effector" style="height: 320px; object-fit: contain;">
+            </div>
+            <ul>
+                <li>Replaced the rotating &ldquo;Finger-Tips&rdquo; with a linear-translating gripper actuated through a gear and rack pair &mdash; adapted from an open-source design and fitted to the STS3215 servo with a new casing and gear</li>
+                <li>Two-material finger: PLA body for structure, <strong>TPU tips</strong> for compliance. The flexible TPU was crucial for absorbing marker jitter and small tracking errors during the translation phase</li>
+            </ul>
+
+            <h3 style="margin-top: 32px;">Extended Reach</h3>
+            <div class="hero-image-row" style="grid-template-columns: 1fr 1fr;">
+                <img src="images/mae577-multirobot/base_modified.png" alt="Arm base extended 3 cm vertically" style="height: 320px; object-fit: contain;">
+                <img src="images/mae577-multirobot/extended_bicep.png" alt="Bicep arm link extended 3 cm" style="height: 320px; object-fit: contain;">
+            </div>
+            <ul>
+                <li>Extended the arm base by 3 cm vertically &mdash; gives the arm more headroom before hitting its rotational ceiling on vertical lifts</li>
+                <li>Extended the &ldquo;bicep&rdquo; (lower arm link) by 3 cm &mdash; pairs with the base extension to keep the gripper oriented correctly through the full lift trajectory</li>
+            </ul>
+
+            <h3 style="margin-top: 32px;">Custom Tray</h3>
+            <p>
+                The tray (PLA, 150 mm &times; 75 mm) carries two slots for 20 mm AprilTag markers 140 mm apart. The markers do double duty as position references <em>and</em> as a tilt gauge via their relative height. Raised 10 mm handles 65 mm high give the grippers a clean target.
+            </p>
+        </div>
+    </section>
+
+    <!-- Perception & Camera -->
+    <section class="project-section">
+        <div class="container">
+            <h2>Perception &amp; Camera</h2>
+            <p>
+                A single Intel RealSense D435i provides a 640&times;480 RGB stream at 30 fps. The D435i&rsquo;s IR stereo depth was too noisy at this range and was discarded &mdash; the entire pipeline runs on the RGB stream alone. Both arm threads consume the same camera frames, simulating two co-located cameras within hardware constraints.
+            </p>
+            <div class="hero-image-row" style="grid-template-columns: 1fr 1fr;">
+                <img src="images/mae577-multirobot/camera.png" alt="Intel RealSense D435i camera" style="height: 320px; object-fit: contain;">
+                <img src="images/mae577-multirobot/AprilTags.png" alt="Three commonly used AprilTag families" style="height: 320px; object-fit: contain;">
+            </div>
+            <p style="margin-top: 24px;">
+                Six AprilTag markers from the <strong>Tag16h5</strong> family label the scene: one 40 mm tag on each arm base, one 40 mm tag on each gripper, and two 20 mm tags on opposite sides of the tray. Tag16h5 was chosen because the simpler 4&times;4 grid stays legible at the small marker sizes our setup demanded. <code>cv2.solvePnP</code> with <code>SOLVEPNP_IPPE_SQUARE</code> against the symmetric corner layout returns 5&ndash;10 mm 3D pose accuracy &mdash; better than any of the coordination thresholds need.
+            </p>
+
+            <h3 style="margin-top: 32px;">Base-Frame Calibration</h3>
+            <p>
+                Each arm has its own natural coordinate frame, so before any task can run, the system has to place each arm&rsquo;s base relative to the camera. The system detects each base tag for 30 consecutive frames and averages the resulting transforms to suppress per-frame jitter. Because hand-mounted tags rarely sit perfectly vertical, the averaged rotation is then re-orthonormalized with <em>explicit gravity alignment</em>:
+            </p>
+            <ol>
+                <li>Find whichever measured axis is most aligned with the camera&rsquo;s vertical, and snap it to exactly vertical (new <em>y</em>)</li>
+                <li>Of the remaining two, project the depth-aligned one onto the horizontal plane (new <em>z</em>)</li>
+                <li>Close the right-handed frame with <em>x = y &times; z</em></li>
+            </ol>
+            <p>
+                Because both arms enforce the same vertical convention, their motion maps share common axes without ever needing an external world frame. Re-running this calibration is also the only step required to move the whole setup to a new location.
+            </p>
+        </div>
+    </section>
+
+    <!-- Motion Map + Coordination (side by side) -->
+    <section class="project-section section-alt">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h2>The Motion Map</h2>
+                    <p>
+                        Instead of a traditional IK solver, each arm uses a degree-3 polynomial that maps a planar target <em>(x,&nbsp;z)</em> directly to 5 servo angles. Fit once per arm from a manual workspace sweep, evaluated in O(1) at runtime, with a visual-servoing feedback term to close the loop.
+                    </p>
+                    <ul>
+                        <li>~8k samples per arm collected in ~10 min by hand-sweeping the workspace</li>
+                        <li>Degree-3 ridge regression, RMSE &asymp; 3&deg; on the main joints</li>
+                        <li>Runtime is a polynomial eval plus a feedback correction &mdash; no iterative solver in the loop</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>Coordination Through Shared Vision</h2>
+                    <p>
+                        Both arms run the <em>same</em> finite-state machine on independent threads. Every transition triggers on what each arm sees &mdash; coordination emerges from the shared image, not from any inter-arm message.
+                    </p>
+                    <ul>
+                        <li><strong>Nudge-lift handshake.</strong> Each arm pre-lifts its side; the other waits for a &ge; 3 mm rise on the opposing tray marker before lifting itself.</li>
+                        <li><strong>Tilt-aware lift.</strong> Each arm only steps up if its side is at-or-below the other &mdash; identical local rules on the same measurements keep the tray level.</li>
+                        <li><strong>Leader&ndash;follower translation.</strong> The follower tracks the leader&rsquo;s gripper marker through a once-measured offset &mdash; no plan exchange required.</li>
+                        <li><strong>Tilt-aware lower.</strong> The lift rule mirrored: pause descent if your side is below the other.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Shared State Machine -->
+    <section class="project-section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                <div>
+                    <h2>The Shared State Machine</h2>
+                    <p>
+                        Both arms execute the same linear state machine. <strong>HOME</strong> and <strong>PRE_GRASP</strong> run synchronized on the main thread, with pre-planned moves that bring both arms into the camera&rsquo;s view &mdash; the only coordinated states in the entire sequence.
+                    </p>
+                    <p>
+                        From <strong>HOVER</strong> onward, each arm runs the rest of the chain on its own thread, issues its own motor commands, and transitions on its own visual events. After PRE_GRASP, the only way the arms &ldquo;know&rdquo; about each other is through what the camera can see &mdash; coordination has to emerge.
+                    </p>
+                </div>
+                <div>
+                    <div class="hero-image-row" style="grid-template-columns: 1fr;">
+                        <img src="images/mae577-multirobot/figure9_state_diagram.png" alt="Shared finite-state machine run by both arms" style="height: 320px; object-fit: contain;">
+                    </div>
+                    <p style="text-align: center; margin: 10px 0 0; font-size: 0.9rem; color: var(--color-text-muted); font-weight: 500;">Shared state machine run by both arms &mdash; all states after PRE_GRASP run independently per-arm.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="project-section section-alt">
+        <div class="container">
+            <h2>Results</h2>
+            <p>
+                50 hardware trials with a water-filled glass on the tray, each starting from a varied position inside the recorded workspace. <strong>37 of 50 trials (74%) ran end-to-end successfully</strong> &mdash; arms returned home with the tray placed and the glass intact.
+            </p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/mae577-multirobot/failure_rate_by_phase.png" alt="Failures and failure rate by phase across 50 trials">
+                    <div class="gallery-caption">
+                        <strong>Failure Distribution</strong>
+                        <p>Failures concentrate at HOVER (14%) and APPROACH (7%); LIFTING, TRANSLATE, and RELEASE produced zero failures across every trial that reached them.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/mae577-multirobot/lift_height.png" alt="Both tray markers' heights over time during a representative lift">
+                    <div class="gallery-caption">
+                        <strong>Synchronized Lift</strong>
+                        <p>Self-throttling produces a clean reciprocating pattern between arms &mdash; max tray tilt &asymp; 1 cm (4&deg;), well below the threshold for the glass to slide.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="images/mae577-multirobot/translate_follower_error_ep004.png" alt="Follower tracking error during a representative TRANSLATE phase">
+                    <div class="gallery-caption">
+                        <strong>Follower Tracking Error</strong>
+                        <p>Follower tracks the leader&rsquo;s gripper through a fixed offset. A strong EMA (&alpha; = 0.1) and the compliant TPU gripper tips absorb high marker noise.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Contributions -->
+    <section class="project-section">
+        <div class="container">
+            <h2>My Contributions</h2>
+            <p>
+                This was a two-person project with Jackson Crocker. My focus was on the hardware and perception layers:
+            </p>
+            <ul>
+                <li>Hardware redesign &amp; CAD (end-effector overhaul, base &amp; bicep extensions, custom tray) in Fusion 360</li>
+                <li>Fabrication on the Bambu X1E &mdash; PLA structural parts, TPU compliant tips</li>
+                <li>Camera setup, workspace layout, and the AprilTag scheme</li>
+                <li>Perception pipeline &mdash; AprilTag detection, <code>solvePnP</code> pose extraction, gravity-aligned base-frame calibration</li>
+                <li>Experimental evaluation &mdash; 50-trial protocol, failure-mode classification, and the metrics shown above</li>
+                <li>System integration and physical testing alongside Jackson</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Back to Portfolio -->
+    <section class="project-section" style="text-align: center; padding: 60px 0;">
+        <div class="container">
+            <a href="index.html#projects" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" style="padding: 30px 0;">
+        <div class="container">
+            <p class="footer-credit">&copy; 2025 David Herrera</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

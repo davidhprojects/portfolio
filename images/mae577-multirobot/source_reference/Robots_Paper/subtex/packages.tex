@@ -1,0 +1,90 @@
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{caption}
+
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{graphicx}
+
+% Since ieee redefined proof.
+\let\proof\relax \let\endproof\relax
+\usepackage{amsthm}
+
+% Copy ieee and use QEDClosed
+\renewcommand{\qedsymbol}{$\QEDclosed$}
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{framed}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage{xspace}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% Citation??
+\usepackage{cite}
+
+% % Balance references.
+% \usepackage{balance}
+
+% Redefined intertext
+\usepackage{nccmath}
+
+% Colored cells
+\usepackage{colortbl}
+
+% FloatBarrier.
+\usepackage{placeins}
+
+\usepackage{subcaption}
+
+\usepackage{lipsum}
+
+% % Proofs at the end because ICRA double column is super hard to write proofs with.
+% \usepackage[createShortEnv,conf={end,restate,no link to proof}]{proof-at-the-end}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+
+% % Proof Sketches
+% \usepackage{apxproof}
+
+% \declaretheorem{lemma}
+
+% % Show the label for equations.
+% \providecommand*\showkeyslabelformat[1]{%
+% \setlength{\fboxsep}{1pt}
+% \fbox{\normalfont\fontsize{4.5}{5.4}\ttfamily#1}}
+% \usepackage[notref,notcite]{showkeys}
+
+% Allow hyperlinks to work.
+\makeatletter
+\let\NAT@parse\undefined
+\makeatother
+\usepackage{hyperref}       % hyperlinks
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!90!black},
+    citecolor={blue!90!black},
+    % citecolor={green!80!black},
+    urlcolor={blue!95!black}
+}
+
+\usepackage[capitalise]{cleveref}       % Named refs
+\usepackage{crossreftools}  % Fix cleveref in headers.
+\pdfstringdefDisableCommands{%
+    \let\cref\crtcref
+    \let\cref\crtcref
+}
+
+\usepackage[all=normal,paragraphs=tight,floats=tight,mathspacing=tight,wordspacing=tight,tracking=tight]{savetrees}

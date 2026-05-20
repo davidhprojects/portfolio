@@ -1,0 +1,68 @@
+\section{The Motion Map}
+\label{sec:motionmap}
+
+A central challenge in any robotic arm problem is inverse kinematics (IK): finding the positions of each motor in an arm to place the end effector at certain coordinates in 3D space with a certain orientation. In the case of the LeRobot SO-101 arm, only 5 of the 6 motors can contribute to this goal, as the last motor is used for the end effector. Thus, the arm is missing one DoF compared to the x-y-z and roll-pitch-yaw requirement. Traditional numerical solvers promise to converge to nearby solutions in this underactuated case, but they require precise measurements of each linkage in the arm in arbitrary coordinate frames, have slow iterative processes that might not be able to run at 30 Hz, and provide more functionality than is necessary for the goals of this project.
+
+Instead, consider a motion map: a low-degree polynomial that takes a planar target $(x,z)$ and returns a 5-length vector of raw servo targets $\vec{q}\in\mathbb{R}^5$ (all arm joints except the gripper). The $y$ (height) coordinate is fixed during the sweep to a chosen hover height above the tray, so the map is
+effectively a 2D $\!\to\!$ 5D regression.
+
+\subsection{Motivation}
+The polynomial form has three practical properties at once:
+\begin{itemize}
+  \item \textbf{O(1) evaluation.} The runtime control loop evaluates a degree-3 polynomial, not an iterative IK solver.
+  \item \textbf{Smooth trajectories.} Polynomial output is
+  continuous in the planar query, so continuous changes in goal
+  position produce continuous joint motion without inverse-kinematics jitter or branch flips.
+  \item \textbf{Ease of use} The map is extraordinarily easy to use once trained, requiring a single method call.
+\end{itemize}
+
+\subsection{Data Collection}
+An operator manually sweeps each arm, with torque disabled, across the workspace while a real-time viewer shows (a) the live $y$ error against the target hover height and (b) a 40$\times$60 cell coverage grid at 5 mm resolution (to cover a 20$\times$30 cm area). Samples are only logged when the gripper marker is within $\pm5$\,mm of the target hover height. The operator aims for full grid coverage before stopping, but only about 70\% coverage was achieved in practice. A typical sweep produces $\sim$8k valid samples per arm in around 10 minutes. 
+
+\subsection{Training the Polynomial}
+\label{sec:mm-training}
+Let $(\vec{x},\vec{q})$ be the collected
+(position, joint-vector) pairs after per-cell
+downsampling (keeping only 1 point per cell that has the lowest y-error). For each joint $j$ we fit a degree-3 polynomial by ridge regression on (mean and std dev) normalized features:
+\begin{equation}
+\label{eq:motion map fit}
+  \vec{c}_j \;=\; (X^\top X + \alpha I)^{-1} X^\top \vec{q},
+\end{equation}
+with $\alpha = 10^{-3}$ for numerical stability and
+$X=\bar{x}\bar{q}$ the matrix for mean-zero and unit-variance normalized inputs
+$(\bar{x},\bar{q})$. 15\% of the points are held as a validation split which gave
+RMSE around $3^\circ$ for most joints, but as high as $8^\circ$
+for the wrist pan and roll joints that were not the main focus of the motion map (they just serve to keep the gripper oriented towards the camera).
+
+
+Two empirical correction terms are slipped in at training time:
+\begin{itemize}
+  \item \textbf{Gravity offsets}: added to
+  \texttt{shoulder\_lift}, \texttt{elbow\_flex}, and \texttt{wrist\_flex}
+  before fitting to counteract the sag caused by hand-supporting the
+  arm during recording.
+  \item \textbf{Position offsets}:
+  translations applied to the recorded (x,z)
+  so that the polynomial learns to target the correct grasp point
+  relative to the tray marker (ex. a 2 cm backward shift on both arms so the gripper lands on the middle of the handle, not directly on the marker
+  itself).
+\end{itemize}
+
+\subsection{Runtime Evaluation}
+At runtime, the motion map returns the joint target for a
+desired planar query. Targets outside the recorded workspace bounds are rejected by the controller and result in the arm staying still rather than being extrapolated. Extrapolation was considered because it is a useful result of the polynomial nature of the motion map, however, implementation proved that the behavior of the arms was somewhat unpredictable as some joints quickly hit their physical rotation limits. There also was not much practical use case for work outside the mapped area, so extrapolation was scrapped.
+
+\subsection{Feedback Correction}
+Because the polynomial is fit before beginning, it will inherit any residual calibration or systematic error. We correct for this at runtime with a simple position-based visual servoing
+loop~\cite{chaumette2006visual1} where we measure the planar error $\vec{e} = \vec{x}_{\text{target}} - \vec{x}_{\text{gripper}}$ and evaluate the polynomial at a shifted query $\vec{x}_{\text{target}} + \beta\vec{e}$ with $\beta=0.5$. This drives the gripper to the actual target rather than the open-loop estimate, closing the loop over time. This feedback correction has the side effect of sweeping the arm down and into the tray when the position error is large, so a raise-on-traverse correction was also added.
+
+\subsection{Raise-on-Traverse}
+To avoid sweeping the gripper through the tray when the planar error is large, the controller also adds a per-joint raise offset
+proportional to $\|\vec{e}\|$, scaled by
+\texttt{RAISE\_DIST\_SCALE\_M}~$=50$\,mm:
+\begin{equation}
+  q \;\mathrel{+}=\;
+  \left(\frac{\|\vec{e}\|}{\texttt{RAISE\_DIST\_SCALE\_M}}\right)
+  \Delta_{\text{raise}}
+\end{equation}
+This raises the arm by a delta for every 50 mm in position error that it currently has. This causes the arm to approach the target from above and settle down as $\|\vec{e}\|$ shrinks, rather than moving down into the tray during hover.

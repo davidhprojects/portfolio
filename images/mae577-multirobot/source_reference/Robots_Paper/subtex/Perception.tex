@@ -1,0 +1,52 @@
+\section{Perception and Base-Frame Calibration}
+\label{sec:perception}
+
+This section covers the perception layer and how each arm turns a raw camera frame into 3D positions for control. The design is intentionally minimalistic. One ArUco detection (\texttt{cv2.aruco.ArucoDetector}~\cite{garrido2014aruco}) call per frame, followed by a \texttt{solvePnP} pose solver for each marker using its own physical size, generates 3D coordinates for each marker. There is no learning and no filtering beyond what OpenCV already provides. 
+
+Each marker is assigned a semantic role via a \texttt{MarkerConfig} dataclass. These include \texttt{left\_base}, \texttt{right\_base},
+\texttt{left\_gripper}, \texttt{right\_gripper}, \texttt{tray\_left}, and
+\texttt{tray\_right}. The marker sizes were determined by where they sit. The base and gripper square AprilTag markers are 40 mm wide, which is large enough to track reliably all the way too the base. The two tray markers are 20 mm wide which is small enough to fit on the tray lip and large enough to remain detectable for the search and grab phases in the beginning. 
+
+
+\subsection{From Pixels to Camera Frame}
+For each detected marker, we recover its full 3D pose including position and orientation relative to the camera. This is a classical perspective-n-point (PnP) problem where given a set of 3D points whose layout is known, as well as their 2D pixel positions in the image, one must solve for the rigid transform that maps one to another.
+
+The inputs are four detected marker corners represented as $\{(u_k, v_k)\}_{k=1}^{4}$, the camera matrix $K$, and the distortion
+coefficients $\vec{d}$. We solved the perspective-n-point problem using \texttt{cv2.SOLVEPNP\_IPPE\_SQUARE}, which is built to handle coplanar square targets, against the symmetric object-frame corners
+$(\pm s/2, \pm s/2, 0)$.
+
+
+The output is then a rotation vector $\vec{r}$ in Rodriguez form, which is a compact 3-vector encoding of a rotation, and a translation $\vec{t}\in\mathbb{R}^3$. This is then combined into a homogeneous transform $T_{\text{cam}}^{\text{marker}}$, which is a representation telling where the marker is, in camera coordinates, used by the rest of the pipeline.
+
+\subsection{Camera-to-Base Calibration}
+\label{sec:calib}
+The two arms sit at different positions and orientations across from each other on the table. Each arm has its own natural frame of reference offset from the other by the width of the table. The motion map for each arm, outlined in Section \ref{sec:motionmap}, is trained in its own base-frame coordinates, so before any task can be done, the system needs to know exactly how each arm base sits relative to the camera. An additional benefit of working in the base frame is that moving the entire setup to a new location only requires re-running the base-frame calibration.
+
+For this, each arm's base carries a fixed 40 mm AprilTag. The system detects this tag for $N{=}30$ consecutive frames, and takes the average resulting rotation vectors and translations to produce an initial $T_{\text{cam}}^{\text{base}}$ per arm. By averaging over 30 frames, the per-frame jitter is suppressed while only adding one second of latency to startup. 
+
+The averaged transform is almost correct, but not quite. Because the base tag is mounted by hand, its measured rotation comes back tilted by a degree or two from true vertical. Left uncorrected, that tilt propagated into every base-frame measurement downstream.
+
+To fix this, the rotation is re-orthonormalized with explicit gravity alignment as a four-step process:
+  \begin{enumerate}
+      \item Project the camera's vertical axis onto each of the tag's three measured axes; whichever has the largest absolute projection is the axis that be vertical.
+      \item Snap it to exactly vertical---this becomes the new $y$-axis.              
+      \item Of the remaining two axes, take whichever is most aligned with the camera's depth direction, project it onto the horizontal plane, and call that the $z$-axis.
+      \item Set the $x$-axis as $y \times z$ to close the right-handed frame.         
+  \end{enumerate}                                           
+
+  The result is a gravity-aligned $T_{\text{cam}}^{\text{base}}$ for each arm. This is a transform that places the arm's base with $y$ guaranteed to point straight up. Because both arms enforce the same vertical convention, their motion maps share common axes without ever requiring an external world frame.
+
+\subsection{Cam-to-Base Transform Use at Runtime}
+At every control tick, each marker's pose comes out of the perception module in camera coordinates. To make these coordinates usable, each one is converted into the calling arm's base frame with a single matrix multiplication, $T_{\text{base}}^{\text{cam}} {\vec{p}}$,
+where ${\vec{p}}$ is the 4D lift of the 3D point. Its $(x, y, z)$ is padded with a trailing 1 to make a 4-length vector, the standard form for applying the 4×4 transform.
+
+$T_\text{base}^\text{cam}$ is the inverse of the $T_\text{cam}^\text{base}$ computed in Section \ref{sec:calib}, precomputed once at startup so the runtime cost is just a single 4×4 multiply.
+
+Because every visual measurement is pushed through the same transform, the rest of the pipeline never needs to track which marker is which. Tray markers, gripper markers, and any other point in the camera frame all arrive in the same base frame, and the motion map polynomial consumes them without further conversion.
+
+\subsection{Per-Arm Asymmetry of Perception}
+A side effect of using a shared camera with individual arm calibrations is that the two arms do not construct identical scene representations. Any calibration error in one transform becomes a bias in that arm's perceived workspace alone as it does not show up in the other arm's view.
+
+
+This sounds like it could break coordination, since both arms reason about the same physical objects, but in practice it does not. The per-arm bias is on the order of millimeters, well below the 5–10 mm ArUco accuracy ceiling that bounds every other arm measurement. Also, the coordination algorithms of Section \ref{sec:coordination} are designed around inequalities and threshold comparisons that already absorb the noise.
+

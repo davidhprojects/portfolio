@@ -1,0 +1,29 @@
+\section{Introduction}
+
+Bimanual manipulation of large or awkward objects is a classic challenge in robotics: the two end-effectors are kinematically independent, but the object they jointly hold couples their behavior. Mistimed or mismatched motion immediately produces forces, tilts, or slips that ruin the task. In practice this is almost always solved by explicit coordination which includes a central planner, a shared controller, or a communication channel that exchanges orientation, forces, or high-level intent~\cite{smith2012dualarm}.
+
+This paper asks a more restrictive question. Suppose we forbid the two arms from talking to each other at all. Each arm runs as an independent process with its own controller, its own sense of time, and its own view of the world through a shared RGB camera. Can two arms, given only what they see, coordinate tightly enough to lift a tray with a glass of water on it, move it across the table, and set it down without spilling? This is a robotics realization of tacit coordination where independent agents converge on aligned behavior through shared context rather than explicit messaging.
+
+We show that the answer is yes, and that the coordination required is not hidden inside a machine learning black box. It can be written as a handful of small, interpretable algorithms whose only shared state is the image and the object identities. The two arms run identical software and coordination emerges because both arms look at the same markers and respond to them with the same deterministic pipeline.
+
+\subsection{Problem Setup}
+Two LeRobot SO-101 5-DoF follower arms are mounted facing each other on a table, separated by roughly 40 centimeters, as seen in Figure \ref{fig:Project Setup}. A single Intel RealSense D435i camera provides a 640$\times$480 RGB stream (depth is not used). Six fiducial (tag16h5) markers are placed in the scene: one on each arm base, one on each gripper, and two on opposite sides of the tray. A glass is placed near the tray center and spill risk is simply encoded by the height difference between the two tray markers.
+The system must execute a complete pick-move-place: approach the tray, grasp it from both sides, lift it level, translate it backward, lower it, and release.
+
+\subsection{Contributions}
+The contributions of this paper are algorithmic and focused on the coordination problem. Specifically, we contribute:
+\begin{itemize}
+\item A \textbf{motion-map formulation} that decouples perception from control: each arm uses a polynomial
+$(x,z) \!\to\! \text{joint angles}$ fit from a manually-collected workspace sweep, so runtime servoing is a polynomial evaluation plus a feedback correction rather than an inverse-kinematics solve. This system allows for limited empirical inverse kinematics on arbitrary (and under-actuated) hardware.
+\item A \textbf{finite-state coordination protocol}
+(\cref{sec:coordination}) in which both arms run the same
+state machine and transitions are triggered by visual events rather than messages.
+\item A \textbf{nudge-lift handshake} that replaces any explicit
+ready-to-lift messaging with a small physical pre-move on the tray, detected by the opposite arm as a vertical rise on the tray marker.
+\item A \textbf{tilt-aware synchronized lift} rule that keeps the tray within a few millimeters of level during ascent by having each arm throttle its own motion based on the relative height of the two tray markers.
+\item A \textbf{leader--follower translation} that uses the leader's gripper marker with a once-measured offset mapping leader gripper to follower tray target.
+\end{itemize}
+
+\subsection{Paper Organization}
+\cref{sec:related} briefly positions the work in other bimanual
+manipulation literature. \cref{sec:system} describes the hardware and software systems. \cref{sec:perception} covers the perception pipeline and the base-frame calibration that makes control generalizable to other environments. \cref{sec:motionmap} explains the polynomial motion map. \cref{sec:coordination} is the core of the paper: it presents the full phasing protocol and coordination algorithms with pseudocode. \cref{sec:results} reports hardware trials, and \cref{sec:conclusion} concludes.

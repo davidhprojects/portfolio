@@ -1,0 +1,149 @@
+\documentclass[conference]{IEEEtran}
+
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+
+\input{subtex/packages}
+\input{subtex/commands}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor tele-opera-tion bi-manual}
+
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{Vision-Mediated Decentralized Coordination \\
+for Bimanual Tray Lifting with \\
+SO-101 Arms}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{\IEEEauthorblockN{Jackson Crocker}
+\IEEEauthorblockA{Mechanical and Aerospace Engineering\\
+Princeton University\\
+Princeton, NJ, USA\\
+jackson.crocker@princeton.edu}
+\and
+\IEEEauthorblockN{David Herrera}
+\IEEEauthorblockA{Mechanical and Aerospace Engineering\\
+Princeton University\\
+Princeton, NJ, USA\\
+davidherrera@princeton.edu}}
+
+
+
+
+% make the title area
+\maketitle
+% As a general rule, do not put math, special symbols or citations
+% in the abstract
+\begin{abstract}
+We present a decentralized algorithmic approach to bimanual tray-lifting with two independent LeRobot SO-101 robot arm manipulators. The two arms share only a single RGB camera stream and exchange no direct messages of any kind. Each arm runs in its own thread and issues motor commands from a scene representation it builds for itself from AprilTag markers on the tray, grippers, and arm bases. Coordination emerges implicitly from both arms observing the same scene and mapping observations to joint commands through the same pipeline. This pipeline includes a pre-fit polynomial motion map from base-frame planar coordinates to joint angles, a shared phased procedure, and closed-loop visual servoing. The contribution of this paper is a set of coordination primitives for bimanual lifting that rely only on shared vision:
+(i) a \emph{nudge-lift handshake} in which each arm pre-tensions the tray and waits for a rise on the opposing tray marker before commencing the full lift; (ii) a \emph{tilt-aware synchronized lift} in which each arm throttles its own ascent based on the relative height of the two tray markers; 
+(iii) a \emph{leader--follower translation} in which the follower tracks the leader's gripper marker through a once-measured offset; and 
+(iv) a \emph{tilt-aware lower} that pauses the lower side of the tray so the other side catches up. The full sequence executes reliably on physical hardware with a water-filled glass on the tray, demonstrating that
+non-trivial bimanual manipulation can be achieved without an explicit communication channel.
+\end{abstract}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{subtex/images/main_image.png}
+    \caption{Problem Setup}
+    \label{fig:Project Setup}
+\end{figure}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+\input{subtex/Introduction}
+\input{subtex/RelatedWork}
+\input{subtex/SystemOverview}
+\input{subtex/Perception}
+\input{subtex/MotionMap}
+\input{subtex/Coordination}
+\input{subtex/Results}
+\input{subtex/Conclusion}
+
+\section{Author Contributions}
+\label{sec: author contributions}
+
+\begin{table} [H]
+    \centering
+    \begin{tabular}{|c|c|}\hline
+         Section& Author\\\hline
+         Abstract & Both\\\hline
+         Introduction& Jackson\\\hline
+         Related Work& Both\\\hline
+         System Overview& David\\\hline
+         Perception and Base-Frame Calibration& David\\\hline
+         The Motion Map& Jackson\\\hline
+         Emergent Coordination via Shared Vision& Jackson\\\hline
+         Experimental Evaluation& David\\\hline
+ Discussion \& Conclusion&Jackson\\ \hline
+    \end{tabular}
+    \caption{Paper Contributions}
+    \label{tab:paper contributions}
+\end{table}
+
+
+\begin{table} [H]
+    \centering
+    \begin{tabular}{|c|c|}\hline
+         Project Task& Engineer\\\hline
+         Hardware/CAD Design \& Modifications& David\\\hline
+         Fabrication \& Assembly& Both\\\hline
+         Camera \& Workspace Setup& David\\\hline
+         Perception Pipeline& David\\\hline
+         Motion Map \& Data Collection& Jackson\\\hline
+         Coordination Algorithms& Jackson\\\hline
+         System Integration/Testing& Both\\ \hline
+    \end{tabular}
+    \caption{Project Task Contributions}
+    \label{tab:project task contributions table}
+\end{table}
+
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,references.bib}
+
+
+
+% that's all folks
+\end{document}
+
+   
+  
+ 

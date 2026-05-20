@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Local-only large media (not referenced by any page; too big for git)
+/IMG_1441.MOV
+/images/mae577-multirobot/IMG_0608 2.MOV
+/images/mae577-multirobot/IMG_0650 2.HEIC

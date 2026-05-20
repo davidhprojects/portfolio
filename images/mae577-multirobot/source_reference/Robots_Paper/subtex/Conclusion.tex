@@ -1,0 +1,32 @@
+\section{Discussion and Conclusion}
+\label{sec:conclusion}
+We have shown that a physically coupled, contact-rich bimanual task can be executed by two independent manipulators that share
+only a camera and exchange no messages. We found that the coordination problem reduces, in this setting, to a design problem: choose visual signals such that (a) both arms can measure them reliably, and (b) local rules on those signals provably produce the globally-synchronized behavior the task requires.
+
+The four coordination algorithms of \cref{sec:coordination} fit this pattern cleanly. The nudge-lift handshake is a physical act-and-observe protocol. The tilt-aware lift and lower rules
+(\eqref{eq:lift-gate} and \cref{algo:lower}) are one-line local
+decisions that converge to synchronized behavior because both arms evaluate the same inequality on the same measurements. The
+leader-follower translation guarantees spacial awareness of the tray using the gripper markers, avoiding the tray-bending failure mode that caused problems in the symmetric implementation.
+
+\subsection{Limitations}
+Three limitations deserve an explicit discussion.
+\begin{itemize}
+  \item \textbf{Shared-camera assumption.} A genuinely decentralized version of this system would need each arm to carry its own camera. The motion-map would work well once the base-frame transform is in place, but individual arm cameras would induce per-arm errors when reading all of the markers. These errors would propagate the most in the \texttt{HOVER} and \texttt{TRANSLATE} phases, in which the arms currently require the most precise measurements. Quantifying the tolerance of our algorithms to such errors is left to future work. Additionally, the current positioning of the fiducial markers would not be visible to the arms in most of their orientations, as they are designed to face a nearby camera. Resolving this would likely require a different perception solution entirely, as marker occlusion would become a significant failure mode.
+  \item \textbf{Workspace coverage.} The polynomial motion map is only valid inside the recorded sweep, at the swept height. Queries outside the bounds are rejected rather than extrapolated, which, on some occasions, means an aggressively placed tray can leave an arm stalled in \texttt{HOVER}. A better solution would fix the problems with the current motion map's extrapolation or implement precise inverse kinematics that are situation-aware and know which DoF can be sacrificed in varying circumstances.
+  \item \textbf{Lack of generalizability.} The \texttt{HOVER} algorithm was intended to be able to track the tray anywhere in the reachable area. In practice, this is not the case. It reliably locates the tray in a small radius around the starting point, but it usually fails to pick up the tray when it is placed in far away, but physically reachable locations. We concluded that this is a combination of motion map error in the extremities of the region and lack of precise control over servo timing. Expanding on the second idea, it frequently was the case that the arms would swoop towards the tray in a low arc that intersects and pushes the tray before the arms arrive. A preliminary idea to remedy this is delaying the joints that cause the arm to lower for a short period, while the joints responsible for raising realize their positions. The effect of this would ideally be an arm that moves in from above instead of from below. This was never implemented because of a large array of error accumulation and latency concerns.
+
+  On a similar note, the final position of the tray is also not generalizable. We can re-record the waypoints used throughout the script to change where the tray will arrive, but this would likely require re-tuning a host of parameters and is clunky. A better and more field-applicable solution would allow the user to choose a destination position in space (potentially as arguments on the file call), and the tray would arrive there.
+\end{itemize}
+
+\subsection{Future Work}
+The most interesting extension is to preserve the no-communication constraint while moving each arm to its own independent perception stack with a separate camera, a separate processor, and no AprilTag IDs. This would require agreeing on object identity through vision alone (potentially by color, shape, or ML embeddings), replacing the marker-based pose estimates with an ML detector, and quantifying the resulting drop in coordination quality. I would expect an extreme drop in quality on the current hardware. 
+
+A second direction is to push the motion map toward 3D to remove the hover-plane assumption, which would let the same coordination primitives drive non-planar tasks such as orienting or tilting the tray intentionally. This would broaden the capabilities of the system and improve the generalizability, while staying true to the idea of a motion map. We actually considered utilizing a 3D motion map, but our 2D map demanded 2400 hand-collected data points (of which we were only able to collect 70\%) and a 3D map would require at least 5-10 times that to be useful. 
+
+A final interesting direction would be to implement the algorithms we have presented here on more capable hardware. We expect that high-DoF production-quality robotic arms would have no problem completing this task, but many of the algorithmic design alterations are a direct result of this hardware. Changing that variable might produce unpredictable results.
+
+\subsection{Conclusion}
+Coordination without communication is not only possible but
+practical for contact-rich bimanual tasks, provided the scene is
+instrumented so that the signals two agents would otherwise
+exchange are instead visible in a shared image. The system presented here is a concrete demonstration: small, understandable algorithms, a simple polynomial motion map, and a shared finite-state protocol are enough to lift and translate a tray with a water glass, reliably, on two arms that never speak to each other.

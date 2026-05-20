@@ -60,7 +60,7 @@
                         </div>
                         <div class="stat">
                             <span class="stat-number">2026</span>
-                            <span class="stat-label">Graduating</span>
+                            <span class="stat-label">Graduated</span>
                         </div>
                         <div class="hero-links">
                             <a href="#projects" class="btn btn-primary">
@@ -86,52 +86,10 @@
     <!-- Education Section -->
     <section id="education" class="section section-alt">
         <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-logo">
-                        <img src="images/logos/princetonlogo.png" alt="Princeton University">
-                    </div>
-                    <div class="timeline-content">
-                        <h3>Princeton University</h3>
-                        <p class="timeline-subtitle">M.Eng. Mechanical &amp; Aerospace Engineering</p>
-                        <p class="timeline-date">2025 — 2026</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-logo">
-                        <img src="images/logos/princetonlogo.png" alt="Princeton University">
-                    </div>
-                    <div class="timeline-content">
-                        <h3>Princeton University</h3>
-                        <p class="timeline-subtitle">B.S.E. Mechanical &amp; Aerospace Engineering</p>
-                        <p class="timeline-date">2021 — 2025</p>
-                        <p>Minor in Robotics and Intelligent Systems</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-logo">
-                        <img src="images/logos/strakelogo.png" alt="Strake Jesuit College Preparatory">
-                    </div>
-                    <div class="timeline-content">
-                        <h3>Strake Jesuit College Preparatory</h3>
-                        <p class="timeline-subtitle">Men's College Preparatory, Houston, TX</p>
-                        <p class="timeline-date">2017 — 2021</p>
-                        <p>Highest Honors, Lincoln Douglas Debate Team Captain</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="section">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+                <div id="experience">
+                    <h2 class="section-title">Experience</h2>
+                    <div class="timeline">
 
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
@@ -206,6 +164,49 @@
                     </div>
                 </div>
 
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="section-title">Education</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-logo">
+                                <img src="images/logos/princetonlogo.png" alt="Princeton University">
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Princeton University</h3>
+                                <p class="timeline-subtitle">M.Eng. Mechanical &amp; Aerospace Engineering</p>
+                                <p class="timeline-date">2025 — 2026</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-logo">
+                                <img src="images/logos/princetonlogo.png" alt="Princeton University">
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Princeton University</h3>
+                                <p class="timeline-subtitle">B.S.E. Mechanical &amp; Aerospace Engineering</p>
+                                <p class="timeline-date">2021 — 2025</p>
+                                <p>Minor in Robotics and Intelligent Systems</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-logo">
+                                <img src="images/logos/strakelogo.png" alt="Strake Jesuit College Preparatory">
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Strake Jesuit College Preparatory</h3>
+                                <p class="timeline-subtitle">Men's College Preparatory, Houston, TX</p>
+                                <p class="timeline-date">2017 — 2021</p>
+                                <p>Highest Honors, Lincoln Douglas Debate Team Captain</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -219,13 +220,24 @@
             <div class="project-filters">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="academic">Academic</button>
-                <button class="filter-btn" data-filter="restoration">Restorations</button>
+                <button class="filter-btn" data-filter="restoration">Personal Passion Projects</button>
             </div>
 
             <!-- Project Grid -->
             <div class="project-grid">
 
                 <!-- Academic Projects -->
+                <a href="mae577-multirobot.html" class="project-card" data-category="academic">
+                    <div class="project-image">
+                        <img src="images/mae577-multirobot/main_image.png" alt="MAE 577 bimanual tray-lifting setup">
+                    </div>
+                    <div class="project-info">
+                        <span class="project-tag">MAE 577</span>
+                        <h3>Thirsty Bots: Bimanual Tray Lifting via Shared Vision</h3>
+                        <p>Two independent SO-101 arms coordinate to lift, move, and lower a tray &mdash; sharing only a camera, exchanging zero messages.</p>
+                    </div>
+                </a>
+
                 <a href="thesis.html" class="project-card" data-category="academic">
                     <div class="project-image">
                         <img src="images/thesis/front_main.jpeg" alt="Senior Thesis">
@@ -315,14 +327,14 @@
                     </div>
                 </a>
 
-                <a href="#" class="project-card" data-category="restoration">
+                <a href="rangerover.html" class="project-card" data-category="restoration">
                     <div class="project-image">
                         <img src="images/projects/rrcover.png" alt="Range Rover">
                     </div>
                     <div class="project-info">
                         <span class="project-tag">Summer 2021</span>
-                        <h3>2006 Range Rover</h3>
-                        <p>Full vehicle restoration.</p>
+                        <h3>2006 Range Rover HSE</h3>
+                        <p>Full mechanical and interior restoration of a luxury V8 SUV &mdash; bought for $1,000, sold for $5,000.</p>
                     </div>
                 </a>
 
